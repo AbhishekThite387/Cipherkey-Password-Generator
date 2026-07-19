@@ -1,0 +1,43 @@
+version: 0.2
+
+env:
+  parameter-store:
+    DOCKER_REGISTRY_USERNAME: /myapp/docker-credentials/username
+    DOCKER_REGISTRY_PASSWORD: /myapp/docker-credentials/password
+    DOCKER_REGISTRY_URL: /myapp/docker-registry/url
+
+phases:
+  pre_build:
+    commands:
+      - echo "Logging in to Docker Registry..."
+      - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
+      - IMAGE_REPO_NAME="password-generator"
+      - IMAGE_NAME="$DOCKER_REGISTRY_USERNAME/$IMAGE_REPO_NAME"
+
+  build:
+    commands:
+      - echo "Build started on $(date)"
+      - echo "Building Docker image..."
+      - docker build -t $IMAGE_NAME:latest .
+      - echo "Creating deployment ZIP..."
+      - zip -r password-generator.zip . -x ".git/*" "node_modules/*" "password-generator.zip"
+
+  post_build:
+    commands:
+      - echo "Build completed on $(date)"
+      - echo "Pushing Docker image to Docker Hub..."
+      - docker push $IMAGE_NAME:latest
+      - echo "Uploading deployment ZIP to S3..."
+      - aws s3 cp password-generator.zip s3://ci-cd-project-bucket-09/password-generator/
+      - echo "Creating image definition file..."
+      - printf '{"ImageURI":"%s","Port":80}' "$IMAGE_NAME:latest" > imageDefinitions.json
+      - cat imageDefinitions.json
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: '.'
+  discard-paths: no
+  exclude-patterns:
+    - 'node_modules/**/*'
+    - '.git/**/*'
