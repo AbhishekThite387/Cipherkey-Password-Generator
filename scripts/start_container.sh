@@ -5,7 +5,7 @@ set -e
 echo "Starting deployment..."
 
 # Pull the latest Docker image from Docker Hub
-docker pull abhishektthite09/password-generator:latest
+docker pull abhishekthite09/password-generator:latest
 
 # Remove old container if it still exists
 docker rm -f password-generator 2>/dev/null || true
@@ -15,7 +15,7 @@ docker run -d \
   --name password-generator \
   --restart unless-stopped \
   -p 80:80 \
-  abhishektthite09/password-generator:latest
+  abhishekthite09/password-generator:latest
 
 echo "Password Generator container started successfully."
 
