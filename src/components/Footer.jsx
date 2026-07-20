@@ -7,7 +7,7 @@ function Footer() {
         Cipherkey runs entirely client-side — no accounts, no tracking, no
         password ever leaves this browser tab.
       </p>
-      <p className="app-footer-meta">Built with React &amp; the Web Crypto API and Build by Abhiii.</p>
+      <p className="app-footer-meta">Built with React &amp; the Web Crypto API by Abhi Thite.</p>
     </footer>
   );
 }
