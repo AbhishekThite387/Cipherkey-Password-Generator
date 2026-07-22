@@ -6,6 +6,23 @@ The application is containerized using **Docker** and deployed to **Amazon EC2**
 
 ---
 
+## 🚀 Project Highlights
+
+- 🔐 Cryptographically secure password generation using `crypto.getRandomValues()`
+- 🎚️ Adjustable password length (4–64 characters)
+- 🔤 Uppercase, lowercase, number, and symbol controls
+- 📊 Password strength and entropy calculation
+- 🕘 Session-only password history
+- 🌗 Light and dark themes
+- 🐳 Dockerized application deployment
+- 🔄 Automated GitHub-to-AWS CI/CD workflow
+- 🏗️ Automated builds using AWS CodeBuild
+- 📦 Deployment artifacts stored in Amazon S3
+- 🚀 Automated deployment using AWS CodeDeploy
+- ☁️ Application hosted on Amazon EC2
+
+---
+
 ### CI/CD Architecture Flow
 
 ![Architecture](screenshots/architecture.png)
@@ -40,37 +57,6 @@ The application is containerized using **Docker** and deployed to **Amazon EC2**
 ![AWS CodeDeploy](screenshots/codedeploy.png)
 
 
----
-
-## 🚀 Project Highlights
-
-- 🔐 Cryptographically secure password generation using `crypto.getRandomValues()`
-- 🎚️ Adjustable password length (4–64 characters)
-- 🔤 Uppercase, lowercase, number, and symbol controls
-- 📊 Password strength and entropy calculation
-- 🕘 Session-only password history
-- 🌗 Light and dark themes
-- 🐳 Dockerized application deployment
-- 🔄 Automated GitHub-to-AWS CI/CD workflow
-- 🏗️ Automated builds using AWS CodeBuild
-- 📦 Deployment artifacts stored in Amazon S3
-- 🚀 Automated deployment using AWS CodeDeploy
-- ☁️ Application hosted on Amazon EC2
-
----
-
-## 🏗️ Architecture Diagram
-
-```mermaid
-flowchart LR
-    A[Developer] -->|Push Code| B[GitHub]
-    B -->|Trigger| C[AWS CodePipeline]
-    C -->|Build| D[AWS CodeBuild]
-    D -->|Store Artifact| E[Amazon S3]
-    E -->|Deployment Revision| F[AWS CodeDeploy]
-    F -->|Deploy| G[Amazon EC2]
-    G -->|Docker Container| H[Cipherkey Live Application]
-```
 ---
 
 ## 🔄 How the CI/CD Pipeline Works
